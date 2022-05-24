@@ -12,13 +12,35 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.4
+  cloud_firestore: ^3.1.16
+  cloud_firestore_web: ^2.6.15
+  firebase_analytics: ^9.1.8
+  firebase_auth: ^3.3.18
+  firebase_core: ^1.17.0
+  firebase_core_web: ^1.6.4
+  flutter_spinkit: ^5.1.0
+  flutter_datetime_picker: 1.5.1
+  google_nav_bar: ^5.0.6
+  google_sign_in: ^5.3.1
+  google_fonts: ^3.0.1
+  json_path: ^0.4.0
+  json_serializable: ^6.2.0
+  page_transition: ^2.0.5
+  sign_in_with_apple:
+    git:
+      url: https://github.com/asmengistu/dart_packages
+      ref: ab18d53a80e0a4bb90f1ad84f37f1b408930f28d
+      path: packages/sign_in_with_apple/sign_in_with_apple/
+  url_launcher: ^6.1.2
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
 
