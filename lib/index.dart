@@ -1,0 +1,1 @@
+export 'splash_screen/splash_screen_widget.dart' show SplashScreenWidget;
