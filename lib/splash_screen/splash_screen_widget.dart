@@ -1,3 +1,4 @@
+import '../esendo/esendo_animations.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
@@ -14,12 +15,36 @@ class SplashScreenWidget extends StatefulWidget {
   _SplashScreenWidgetState createState() => _SplashScreenWidgetState();
 }
 
-class _SplashScreenWidgetState extends State<SplashScreenWidget> {
+class _SplashScreenWidgetState extends State<SplashScreenWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'containerOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 2000,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+  };
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    startPageLoadAnimations(
+      animationsMap.values
+          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+      this,
+    );
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'SplashScreen'});
   }
@@ -42,7 +67,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+          padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,30 +96,31 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 2, 0, 20),
-                              child: FFButtonWidget(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 2, 0, 20),
+                              child: EDButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent('Button-ON_TAP');
-                                  logFirebaseEvent('Button-Navigate-To');
+                                  logFirebaseEvent('Button_ON_TAP');
+                                  logFirebaseEvent('Button_Navigate-To');
                                   await Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RegisterWidget(),
+                                      builder: (context) =>
+                                          const RegisterWidget(),
                                     ),
                                   );
                                 },
                                 text: 'Hesap Oluştur',
-                                options: FFButtonOptions(
+                                options: EDButtonOptions(
                                   width: 200,
                                   height: 50,
-                                  color:
-                                      EsenDoTheme.of(context).primaryColor,
+                                  color: EsenDoTheme.of(context).primaryColor,
                                   textStyle: EsenDoTheme.of(context)
                                       .subtitle2
                                       .override(
@@ -103,7 +129,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                   elevation: 3,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,
                                   ),
@@ -111,19 +137,19 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                                 ),
                               ),
                             ),
-                            FFButtonWidget(
+                            EDButtonWidget(
                               onPressed: () async {
-                                logFirebaseEvent('Button-ON_TAP');
-                                logFirebaseEvent('Button-Navigate-To');
+                                logFirebaseEvent('Button_ON_TAP');
+                                logFirebaseEvent('Button_Navigate-To');
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginWidget(),
+                                    builder: (context) => const LoginWidget(),
                                   ),
                                 );
                               },
                               text: 'Giriş Yap',
-                              options: FFButtonOptions(
+                              options: EDButtonOptions(
                                 width: 200,
                                 height: 50,
                                 color: EsenDoTheme.of(context).white,
@@ -131,12 +157,12 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Lexend Deca',
-                                      color: EsenDoTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          EsenDoTheme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold,
                                     ),
                                 elevation: 3,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
                                 ),
@@ -153,7 +179,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
             ],
           ),
         ),
-      ),
+      ).animated([animationsMap['containerOnPageLoadAnimation']]),
     );
   }
 }

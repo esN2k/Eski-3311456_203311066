@@ -1,24 +1,40 @@
 import '../backend/backend.dart';
-import '../components/create_task_widget.dart';
+import '../create_task_page/create_task_page_widget.dart';
 import '../esendo/esendo_animations.dart';
+import '../esendo/esendo_icon_button.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_toggle_icon.dart';
 import '../esendo/esendo_util.dart';
+import '../task_details/task_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-class CompletedTasksWidget extends StatefulWidget {
-  const CompletedTasksWidget({Key key}) : super(key: key);
+class MyTasksWidget extends StatefulWidget {
+  const MyTasksWidget({Key key}) : super(key: key);
 
   @override
-  _CompletedTasksWidgetState createState() => _CompletedTasksWidgetState();
+  _MyTasksWidgetState createState() => _MyTasksWidgetState();
 }
 
-class _CompletedTasksWidgetState extends State<CompletedTasksWidget>
+class _MyTasksWidgetState extends State<MyTasksWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
-    'rowOnPageLoadAnimation': AnimationInfo(
+    'rowOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      duration: 600,
+      fadeIn: true,
+      initialState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 0,
+      ),
+      finalState: AnimationState(
+        offset: const Offset(0, 0),
+        scale: 1,
+        opacity: 1,
+      ),
+    ),
+    'rowOnPageLoadAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       duration: 600,
       fadeIn: true,
@@ -60,8 +76,7 @@ class _CompletedTasksWidgetState extends State<CompletedTasksWidget>
       this,
     );
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'CompletedTasks'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'myTasks'});
   }
 
   @override
@@ -72,11 +87,10 @@ class _CompletedTasksWidgetState extends State<CompletedTasksWidget>
         backgroundColor: EsenDoTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         title: Text(
-          'Yaptıklarım',
+          'Yapılacaklarım',
           style: EsenDoTheme.of(context).title1.override(
                 fontFamily: 'Lexend Deca',
                 color: EsenDoTheme.of(context).tertiaryColor,
-                fontWeight: FontWeight.w900,
               ),
         ),
         actions: const [],
@@ -85,29 +99,33 @@ class _CompletedTasksWidgetState extends State<CompletedTasksWidget>
       ),
       backgroundColor: EsenDoTheme.of(context).darkBG,
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          logFirebaseEvent('FloatingActionButton_ON_TAP');
-          logFirebaseEvent('FloatingActionButton_Bottom-Sheet');
-          await showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: SizedBox(
-                  height: 410,
-                  child: const CreateTaskWidget(),
-                ),
-              );
-            },
-          );
+        onPressed: () {
+          print('FloatingActionButton pressed ...');
         },
         backgroundColor: EsenDoTheme.of(context).primaryColor,
         elevation: 8,
-        child: Icon(
-          Icons.add_rounded,
-          color: EsenDoTheme.of(context).tertiaryColor,
-          size: 32,
+        child: EsenDoIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          buttonSize: 48,
+          icon: Icon(
+            Icons.add_rounded,
+            color: EsenDoTheme.of(context).tertiaryColor,
+            size: 30,
+          ),
+          onPressed: () async {
+            logFirebaseEvent('IconButton_ON_TAP');
+            logFirebaseEvent('IconButton_Navigate-To');
+            await Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.bottomToTop,
+                duration: const Duration(milliseconds: 270),
+                reverseDuration: const Duration(milliseconds: 270),
+                child: const CreateTaskPageWidget(),
+              ),
+            );
+          },
         ),
       ).animated([animationsMap['floatingActionButtonOnPageLoadAnimation']]),
       body: SafeArea(
@@ -117,67 +135,90 @@ class _CompletedTasksWidgetState extends State<CompletedTasksWidget>
             Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Image.asset(
-                  'assets/images/Esen.do__6_-removebg.png',
+                Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 56,
-                  fit: BoxFit.fill,
+                  height: 53,
+                  decoration: BoxDecoration(
+                    color: EsenDoTheme.of(context).darkBG,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: Image.asset(
+                        'assets/images/Esen.do__6_-removebg.png',
+                      ).image,
+                    ),
+                    shape: BoxShape.rectangle,
+                  ),
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Zamanla Yapılacaklar:',
+                    style: EsenDoTheme.of(context).bodyText2,
+                  ),
+                ],
+              ).animated([animationsMap['rowOnPageLoadAnimation1']]),
+            ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                        child: StreamBuilder<List<ToDoListRecord>>(
-                          stream: queryToDoListRecord(
-                            queryBuilder: (toDoListRecord) => toDoListRecord
-                                .where('toDoState', isEqualTo: true)
-                                .orderBy('toDoDate'),
-                          ),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: SpinKitFoldingCube(
-                                    color: EsenDoTheme.of(context).primaryColor,
-                                    size: 50,
-                                  ),
+                      child: StreamBuilder<List<ToDoListRecord>>(
+                        stream: queryToDoListRecord(
+                          queryBuilder: (toDoListRecord) =>
+                              toDoListRecord.orderBy('toDoDate'),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: SpinKitFoldingCube(
+                                  color: EsenDoTheme.of(context).primaryColor,
+                                  size: 50,
                                 ),
-                              );
-                            }
-                            List<ToDoListRecord> columnToDoListRecordList =
-                                snapshot.data;
-                            if (columnToDoListRecordList.isEmpty) {
-                              return Center(
-                                child: Image.asset(
-                                  'assets/images/uiList_Empty@3x.png',
-                                ),
-                              );
-                            }
-                            return SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: List.generate(
-                                    columnToDoListRecordList.length,
-                                    (columnIndex) {
-                                  final columnToDoListRecord =
-                                      columnToDoListRecordList[columnIndex];
-                                  return Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
+                              ),
+                            );
+                          }
+                          List<ToDoListRecord> columnToDoListRecordList =
+                              snapshot.data;
+                          return SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:
+                                  List.generate(columnToDoListRecordList.length,
+                                      (columnIndex) {
+                                final columnToDoListRecord =
+                                    columnToDoListRecordList[columnIndex];
+                                return Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      logFirebaseEvent('Container_ON_TAP');
+                                      logFirebaseEvent('Container_Navigate-To');
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              TaskDetailsWidget(
+                                            toDoNote:
+                                                columnToDoListRecord.reference,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                     child: Material(
                                       color: Colors.transparent,
                                       elevation: 3,
@@ -289,16 +330,16 @@ class _CompletedTasksWidgetState extends State<CompletedTasksWidget>
                                         ),
                                       ),
                                     ),
-                                  );
-                                }),
-                              ),
-                            );
-                          },
-                        ),
+                                  ),
+                                );
+                              }),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
-                ).animated([animationsMap['rowOnPageLoadAnimation']]),
+                ).animated([animationsMap['rowOnPageLoadAnimation2']]),
               ),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:built_value/standard_json_plugin.dart';
+import 'package:esendo/esendo/esendo_util.dart';
 
 import 'users_record.dart';
 import 'to_do_list_record.dart';
@@ -11,7 +12,7 @@ part 'serializers.g.dart';
 
 const kDocumentReferenceField = 'Document__Reference__Field';
 
-@SerializersFor(const [
+@SerializersFor([
   UsersRecord,
   ToDoListRecord,
 ])
@@ -31,56 +32,56 @@ class DocumentReferenceSerializer
     implements PrimitiveSerializer<DocumentReference> {
   final bool structured = false;
   @override
-  final Iterable<Type> types = new BuiltList<Type>([DocumentReference]);
+  final Iterable<Type> types = BuiltList<Type>([DocumentReference]);
   @override
   final String wireName = 'DocumentReference';
 
   @override
   Object serialize(Serializers serializers, DocumentReference reference,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     return reference;
   }
 
   @override
   DocumentReference deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       serialized as DocumentReference;
 }
 
 class DateTimeSerializer implements PrimitiveSerializer<DateTime> {
   @override
-  final Iterable<Type> types = new BuiltList<Type>([DateTime]);
+  final Iterable<Type> types = BuiltList<Type>([DateTime]);
   @override
   final String wireName = 'DateTime';
 
   @override
   Object serialize(Serializers serializers, DateTime dateTime,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     return dateTime;
   }
 
   @override
   DateTime deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       serialized as DateTime;
 }
 
 class LatLngSerializer implements PrimitiveSerializer<LatLng> {
   final bool structured = false;
   @override
-  final Iterable<Type> types = new BuiltList<Type>([LatLng]);
+  final Iterable<Type> types = BuiltList<Type>([LatLng]);
   @override
   final String wireName = 'LatLng';
 
   @override
   Object serialize(Serializers serializers, LatLng location,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     return location;
   }
 
   @override
   LatLng deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType: FullType.unspecified}) =>
+          {FullType specifiedType = FullType.unspecified}) =>
       serialized as LatLng;
 }
 

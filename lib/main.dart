@@ -1,20 +1,21 @@
+import 'package:esendo/completed_tasks/completed_tasks_widget.dart';
+import 'package:esendo/my_profile/my_profile_widget.dart';
+import 'package:esendo/my_tasks/my_tasks_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'auth/firebase_user_provider.dart';
 import 'auth/auth_util.dart';
 
 import 'esendo/esendo_theme.dart';
-import 'esendo/esendo_util.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'esendo/internationalization.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await EsenDoTheme.initialize();
 
   runApp(MyApp());
 }
@@ -30,10 +31,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale _locale;
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeMode _themeMode = EsenDoTheme.themeMode;
 
-  Stream<EsenDoFirebaseUser> userStream;
-  EsenDoFirebaseUser initialUser;
+  Stream<EsendoFirebaseUser> userStream;
+  EsendoFirebaseUser initialUser;
   bool displaySplashImage = true;
 
   final authUserSub = authenticatedUserStream.listen((_) {});
@@ -41,10 +42,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    userStream = esenDoFirebaseUserStream()
+    userStream = esendoFirebaseUserStream()
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
     Future.delayed(
-      Duration(seconds: 1),
+      const Duration(seconds: 1),
       () => setState(() => displaySplashImage = false),
     );
   }
@@ -59,14 +60,15 @@ class _MyAppState extends State<MyApp> {
   void setLocale(Locale value) => setState(() => _locale = value);
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
+        EsenDoTheme.saveThemeMode(mode);
       });
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'EsenDo',
-      localizationsDelegates: [
-        FFLocalizationsDelegate(),
+      title: 'Esendo',
+      localizationsDelegates: const [
+        EDLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
@@ -76,6 +78,7 @@ class _MyAppState extends State<MyApp> {
         Locale('tr', ''),
       ],
       theme: ThemeData(brightness: Brightness.light),
+      darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: _themeMode,
       home: initialUser == null || displaySplashImage
           ? Container(
@@ -88,14 +91,14 @@ class _MyAppState extends State<MyApp> {
               ),
             )
           : currentUser.loggedIn
-              ? NavBarPage()
-              : SplashScreenWidget(),
+              ? const NavBarPage()
+              : const SplashScreenWidget(),
     );
   }
 }
 
 class NavBarPage extends StatefulWidget {
-  NavBarPage({Key key, this.initialPage}) : super(key: key);
+  const NavBarPage({Key key, this.initialPage}) : super(key: key);
 
   final String initialPage;
 
@@ -127,17 +130,21 @@ class _NavBarPageState extends State<NavBarPage> {
         selectedIndex: currentIndex,
         onTabChange: (i) =>
             setState(() => _currentPage = tabs.keys.toList()[i]),
-        backgroundColor: EsenDoTheme.of(context).primaryBlack,
+        backgroundColor: EsenDoTheme.of(context).secondaryColor,
         color: EsenDoTheme.of(context).tertiaryColor,
         activeColor: EsenDoTheme.of(context).primaryColor,
-        tabBackgroundColor: Color(0x00000000),
+        tabBackgroundColor: const Color(0x00000000),
+        tabActiveBorder: Border.all(
+          color: EsenDoTheme.of(context).primaryColor,
+          width: 2,
+        ),
         tabBorderRadius: 100,
-        tabMargin: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+        tabMargin: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+        padding: const EdgeInsetsDirectional.fromSTEB(3, 3, 3, 3),
         gap: 0,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        duration: Duration(milliseconds: 500),
-        haptic: false,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        duration: const Duration(milliseconds: 500),
+        haptic: true,
         tabs: [
           GButton(
             icon: currentIndex == 0 ? Icons.alarm_on : Icons.alarm_on,
