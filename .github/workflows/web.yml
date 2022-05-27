@@ -10,7 +10,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2 # Only works with v2
+<<<<<<< HEAD
         uses: subosito/flutter-action@v1
         uses: esN2k/3311456_203311066
+=======
+      - uses: subosito/flutter-action@v1
+      - uses: esN2k/3311456_203311066@v37
+>>>>>>> parent of 78c2332... Pages Fix
         with:
           baseHref: /Responsive-ToDo-App-Using-Flutter/
