@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2 # Only works with v2
       - uses: subosito/flutter-action@v1
-      - uses: esN2k/3311456_203311066@v36.1.1
+      - uses: esN2k/3311456_203311066@v1
         with:
           baseHref: /Responsive-ToDo-App-Using-Flutter/
