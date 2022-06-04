@@ -6,6 +6,7 @@ import '../esendo/esendo_animations.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
+import '../gestures/gestures.dart';
 import '../splash_screen/splash_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -31,12 +32,12 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
       duration: 600,
       fadeIn: true,
       initialState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 0,
       ),
       finalState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 1,
       ),
@@ -46,12 +47,12 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
       duration: 600,
       fadeIn: true,
       initialState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 0,
       ),
       finalState: AnimationState(
-        offset: Offset(0, 0),
+        offset: const Offset(0, 0),
         scale: 1,
         opacity: 1,
       ),
@@ -111,7 +112,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                     color: EsenDoTheme.of(context).tertiaryColor,
                   ),
             ),
-            actions: [],
+            actions: const [],
             centerTitle: false,
             elevation: 0,
           ),
@@ -134,16 +135,15 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                         child: AuthUserStreamWidget(
                           child: Text(
                             currentUserDisplayName,
-                            style:
-                                EsenDoTheme.of(context).subtitle1.override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: EsenDoTheme.of(context)
-                                          .tertiaryColor,
-                                    ),
+                            style: EsenDoTheme.of(context).subtitle1.override(
+                                  fontFamily: 'Lexend Deca',
+                                  color: EsenDoTheme.of(context).tertiaryColor,
+                                ),
                           ),
                         ),
                       ),
@@ -152,7 +152,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 162,
+                  height: 232,
                   decoration: BoxDecoration(
                     color: EsenDoTheme.of(context).secondaryColor,
                   ),
@@ -162,17 +162,20 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                         child: Text(
                           'Hesap Bilgileri',
                           style: EsenDoTheme.of(context).bodyText2,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
                         child: InkWell(
                           onTap: () async {
-                            logFirebaseEvent('Row_ON_TAP');
+                            logFirebaseEvent(
+                                'MY_PROFILE_PAGE_Row_kthr1d0p_ON_TAP');
                             logFirebaseEvent('Row_Navigate-To');
                             await Navigator.push(
                               context,
@@ -190,7 +193,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16, 8, 0, 16),
                                   child: Text(
                                     'Profili Düzenle',
@@ -205,12 +208,11 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 12, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 12, 8),
                                 child: Icon(
                                   Icons.arrow_forward_ios,
-                                  color: EsenDoTheme.of(context)
-                                      .tertiaryColor,
+                                  color: EsenDoTheme.of(context).tertiaryColor,
                                   size: 24,
                                 ),
                               ),
@@ -226,15 +228,18 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                         color: EsenDoTheme.of(context).primaryColor,
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
                         child: InkWell(
                           onTap: () async {
-                            logFirebaseEvent('Row_ON_TAP');
+                            logFirebaseEvent(
+                                'MY_PROFILE_PAGE_Row_wwr27y1g_ON_TAP');
                             logFirebaseEvent('Row_Navigate-To');
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ChangePasswordWidget(),
+                                builder: (context) =>
+                                    const ChangePasswordWidget(),
                               ),
                             );
                           },
@@ -244,7 +249,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                             children: [
                               Expanded(
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       16, 8, 0, 16),
                                   child: Text(
                                     'Şifre Değiştir',
@@ -259,12 +264,66 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 12, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 12, 8),
                                 child: Icon(
                                   Icons.arrow_forward_ios,
-                                  color: EsenDoTheme.of(context)
-                                      .tertiaryColor,
+                                  color: EsenDoTheme.of(context).tertiaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        height: 2,
+                        thickness: 1,
+                        indent: 0,
+                        endIndent: 0,
+                        color: EsenDoTheme.of(context).primaryColor,
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'MY_PROFILE_PAGE_Row_mufucudx_ON_TAP');
+                            logFirebaseEvent('Row_Navigate-To');
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const GesturesWidget(),
+                              ),
+                            );
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16, 8, 0, 16),
+                                  child: Text(
+                                    'Gesture\'lar',
+                                    style: EsenDoTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Lexend Deca',
+                                          color: EsenDoTheme.of(context)
+                                              .tertiaryColor,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 12, 8),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: EsenDoTheme.of(context).tertiaryColor,
                                   size: 24,
                                 ),
                               ),
@@ -277,7 +336,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                 ).animated([animationsMap['containerOnPageLoadAnimation']]),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -289,20 +348,22 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 16),
                               child: EDButtonWidget(
                                 onPressed: () async {
-                                  logFirebaseEvent('Button_ON_TAP');
+                                  logFirebaseEvent(
+                                      'MY_PROFILE_PAGE_ÇIKIŞ_YAP_BUTTON_ON_TAP');
                                   logFirebaseEvent('Button_Navigate-To');
                                   await Navigator.push(
                                     context,
                                     PageTransition(
                                       type: PageTransitionType.bottomToTop,
-                                      duration: Duration(milliseconds: 250),
+                                      duration:
+                                          const Duration(milliseconds: 250),
                                       reverseDuration:
-                                          Duration(milliseconds: 250),
-                                      child: SplashScreenWidget(),
+                                          const Duration(milliseconds: 250),
+                                      child: const SplashScreenWidget(),
                                     ),
                                   );
                                   logFirebaseEvent('Button_Auth');
@@ -312,8 +373,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                 options: EDButtonOptions(
                                   width: 130,
                                   height: 50,
-                                  color: EsenDoTheme.of(context)
-                                      .tertiaryColor,
+                                  color: EsenDoTheme.of(context).tertiaryColor,
                                   textStyle: EsenDoTheme.of(context)
                                       .subtitle2
                                       .override(
@@ -322,7 +382,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                                             .primaryColor,
                                       ),
                                   elevation: 3,
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.transparent,
                                     width: 1,
                                   ),

@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "369897971507",
+    "project_id": "esendo-90aa9",
+    "storage_bucket": "esendo-90aa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369897971507:android:584d180889ef378805e846",
+        "android_client_info": {
+          "package_name": "com.esendo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369897971507-huasnbonraeonlpbdpqkq5rglpbdq0ke.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.esendo",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "369897971507-238tuphgatl0ogg36bld7h5l1o491qho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB54gI7f8AgygFK2dhDMvc7ihO43r39FZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369897971507-238tuphgatl0ogg36bld7h5l1o491qho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "369897971507-9btn5u35lm3cl4rvevaq4vrjnq809bmb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutter.esendo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369897971507:android:c5a33612e5d9bb9205e846",
+        "android_client_info": {
+          "package_name": "com.flutter.esendo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369897971507-6nq9fitvjl3gnrttuoj5pbcssejpalbe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flutter.esendo",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "369897971507-238tuphgatl0ogg36bld7h5l1o491qho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB54gI7f8AgygFK2dhDMvc7ihO43r39FZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369897971507-238tuphgatl0ogg36bld7h5l1o491qho.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "369897971507-9btn5u35lm3cl4rvevaq4vrjnq809bmb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutter.esendo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

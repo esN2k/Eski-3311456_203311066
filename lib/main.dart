@@ -119,9 +119,9 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'CompletedTasks': CompletedTasksWidget(),
-      'myTasks': MyTasksWidget(),
-      'MyProfile': MyProfileWidget(),
+      'CompletedTasks': const CompletedTasksWidget(),
+      'myTasks': const MyTasksWidget(),
+      'MyProfile': const MyProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
     return Scaffold(

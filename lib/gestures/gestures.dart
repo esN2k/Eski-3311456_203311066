@@ -3,6 +3,8 @@ import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
 import '../main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class GesturesWidget extends StatefulWidget {
   const GesturesWidget({Key key}) : super(key: key);
@@ -70,7 +72,7 @@ class _GesturesWidgetState extends State<GesturesWidget> {
                         InkWell(
                           onDoubleTap: () async {
                             logFirebaseEvent(
-                                'GESTURES_PAGE_PROCEED_TO_CHECKOUT_BUTTON_ON_DOUBLE_TAP');
+                                'GESTURES_PAGE_GESTURES_IÇIN_BURAYA_BASINIZ_BUTTON_ON_DOUBLE_TAP');
                             logFirebaseEvent('Button_Navigate-To');
                             await Navigator.push(
                               context,
@@ -82,7 +84,7 @@ class _GesturesWidgetState extends State<GesturesWidget> {
                           },
                           onLongPress: () async {
                             logFirebaseEvent(
-                                'GESTURES_PAGE_PROCEED_TO_CHECKOUT_BUTTON_ON_LONG_PRESS');
+                                'GESTURES_PAGE_GESTURES_IÇIN_BURAYA_BASINIZ_BUTTON_ON_LONG_PRESS');
                             logFirebaseEvent('Button_Navigate-To');
                             await Navigator.push(
                               context,
@@ -95,11 +97,11 @@ class _GesturesWidgetState extends State<GesturesWidget> {
                           child: EDButtonWidget(
                             onPressed: () async {
                               logFirebaseEvent(
-                                  'GESTURES_PAGE_PROCEED_TO_CHECKOUT_BUTTON_ON_TAP');
+                                  'GESTURES_PAGE_GESTURES_IÇIN_BURAYA_BASINIZ_BUTTON_ON_TAP');
                               logFirebaseEvent('Button_Navigate-Back');
                               Navigator.pop(context);
                             },
-                            text: 'Proceed to Checkout',
+                            text: 'Gestures için buraya basınız',
                             options: EDButtonOptions(
                               width: 150,
                               height: 60,
