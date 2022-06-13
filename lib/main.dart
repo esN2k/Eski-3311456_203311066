@@ -13,7 +13,8 @@ import 'index.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await EsenDoTheme.initialize();
 
   runApp(MyApp());
