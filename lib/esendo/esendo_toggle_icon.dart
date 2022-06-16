@@ -1,11 +1,13 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 class ToggleIcon extends StatelessWidget {
   const ToggleIcon({
-    @required this.value,
-    @required this.onPressed,
-    @required this.onIcon,
-    @required this.offIcon,
+    required this.value,
+    required this.onPressed,
+    required this.onIcon,
+    required this.offIcon,
   });
 
   final bool value;

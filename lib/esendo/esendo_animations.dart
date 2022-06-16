@@ -1,7 +1,7 @@
-import 'dart:math';
-import 'dart:ui';
+// ignore_for_file: avoid_function_literals_in_foreach_calls
 
-import 'package:flutter/animation.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 enum AnimationTrigger {
@@ -23,28 +23,27 @@ class AnimationState {
 class AnimationInfo {
   AnimationInfo({
     this.curve = Curves.easeInOut,
-    @required this.trigger,
-    @required this.duration,
+    required this.trigger,
+    required this.duration,
     this.delay = 0,
     this.fadeIn = false,
-    this.initialState,
-    this.finalState,
+    required this.initialState,
+    required this.finalState,
   });
-
   final Curve curve;
-  final AnimationTrigger trigger;
-  final int duration;
+  final AnimationTrigger? trigger;
+  final int? duration;
   final int delay;
   final bool fadeIn;
-  final AnimationState initialState;
-  final AnimationState finalState;
-  CurvedAnimation curvedAnimation;
+  final AnimationState? initialState;
+  final AnimationState? finalState;
+  late final CurvedAnimation curvedAnimation;
 }
 
 void createAnimation(AnimationInfo animation, TickerProvider vsync) {
   animation.curvedAnimation = CurvedAnimation(
     parent: AnimationController(
-      duration: Duration(milliseconds: animation.duration),
+      duration: Duration(milliseconds: animation.duration!),
       vsync: vsync,
     ),
     curve: animation.curve,
@@ -86,30 +85,30 @@ extension AnimatedWidgetExtension on Widget {
           return child;
         }
         var returnedWidget = child;
-        if (animationInfo.initialState.offset.dx != 0 ||
-            animationInfo.initialState.offset.dy != 0 ||
-            animationInfo.finalState.offset.dx != 0 ||
-            animationInfo.finalState.offset.dy != 0) {
-          final xRange = animationInfo.finalState.offset.dx -
-              animationInfo.initialState.offset.dx;
-          final yRange = animationInfo.finalState.offset.dy -
-              animationInfo.initialState.offset.dy;
+        if (animationInfo.initialState!.offset.dx != 0 ||
+            animationInfo.initialState!.offset.dy != 0 ||
+            animationInfo.finalState!.offset.dx != 0 ||
+            animationInfo.finalState!.offset.dy != 0) {
+          final xRange = animationInfo.finalState!.offset.dx -
+              animationInfo.initialState!.offset.dx;
+          final yRange = animationInfo.finalState!.offset.dy -
+              animationInfo.initialState!.offset.dy;
           final xDelta = xRange * animationInfo.curvedAnimation.value;
           final yDelta = yRange * animationInfo.curvedAnimation.value;
           returnedWidget = Transform.translate(
             offset: Offset(
-              animationInfo.initialState.offset.dx + xDelta,
-              animationInfo.initialState.offset.dy + yDelta,
+              animationInfo.initialState!.offset.dx + xDelta,
+              animationInfo.initialState!.offset.dy + yDelta,
             ),
             child: returnedWidget,
           );
         }
-        if (animationInfo.initialState.scale != 1 ||
-            animationInfo.finalState.scale != 1) {
+        if (animationInfo.initialState!.scale != 1 ||
+            animationInfo.finalState!.scale != 1) {
           final range =
-              animationInfo.finalState.scale - animationInfo.initialState.scale;
+              animationInfo.finalState!.scale - animationInfo.initialState!.scale;
           final delta = range * animationInfo.curvedAnimation.value;
-          final scale = animationInfo.initialState.scale + delta;
+          final scale = animationInfo.initialState!.scale + delta;
 
           returnedWidget = Transform.scale(
             scale: scale,
@@ -117,11 +116,11 @@ extension AnimatedWidgetExtension on Widget {
           );
         }
         if (animationInfo.fadeIn) {
-          final opacityRange = animationInfo.finalState.opacity -
-              animationInfo.initialState.opacity;
+          final opacityRange = animationInfo.finalState!.opacity -
+              animationInfo.initialState!.opacity;
           final opacityDelta =
               animationInfo.curvedAnimation.value * opacityRange;
-          final opacity = animationInfo.initialState.opacity + opacityDelta;
+          final opacity = animationInfo.initialState!.opacity + opacityDelta;
 
           returnedWidget = Opacity(
             // In cases where the child tree has a Material widget with elevation,

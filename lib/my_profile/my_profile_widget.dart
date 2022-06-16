@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../change_password/change_password_widget.dart';
@@ -10,15 +12,14 @@ import '../gestures/gestures.dart';
 import '../splash_screen/splash_screen_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MyProfileWidget extends StatefulWidget {
   const MyProfileWidget({
-    Key key,
+    Key? key,
     this.displayName,
   }) : super(key: key);
 
-  final UsersRecord displayName;
+  final UsersRecord? displayName;
 
   @override
   _MyProfileWidgetState createState() => _MyProfileWidgetState();
@@ -74,7 +75,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<UsersRecord>>(
+    return StreamBuilder<List<UsersRecord?>>(
       stream: queryUsersRecord(
         singleRecord: true,
       ),
@@ -92,9 +93,9 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
             ),
           );
         }
-        List<UsersRecord> myProfileUsersRecordList = snapshot.data;
+        List<UsersRecord>? myProfileUsersRecordList = snapshot.data!.cast<UsersRecord>();
         // Return an empty Container when the document does not exist.
-        if (snapshot.data.isEmpty) {
+        if (snapshot.data!.isEmpty) {
           return Container();
         }
         final myProfileUsersRecord = myProfileUsersRecordList.isNotEmpty
@@ -181,7 +182,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                               context,
                               MaterialPageRoute(
                                 builder: (context) => EditProfileWidget(
-                                  displayName: myProfileUsersRecord,
+                                  displayName: myProfileUsersRecord!,
                                   email: myProfileUsersRecord,
                                 ),
                               ),
@@ -238,8 +239,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const ChangePasswordWidget(),
+                                builder: (context) => ChangePasswordWidget(),
                               ),
                             );
                           },
@@ -294,7 +294,7 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const GesturesWidget(),
+                                builder: (context) => GesturesWidget(),
                               ),
                             );
                           },
@@ -333,73 +333,84 @@ class _MyProfileWidgetState extends State<MyProfileWidget>
                       ),
                     ],
                   ),
-                ).animated([animationsMap['containerOnPageLoadAnimation']]),
+                ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 0, 0, 16),
-                              child: EDButtonWidget(
-                                onPressed: () async {
-                                  logFirebaseEvent(
-                                      'MY_PROFILE_PAGE_ÇIKIŞ_YAP_BUTTON_ON_TAP');
-                                  logFirebaseEvent('Button_Navigate-To');
-                                  await Navigator.push(
-                                    context,
-                                    PageTransition(
-                                      type: PageTransitionType.bottomToTop,
-                                      duration:
-                                          const Duration(milliseconds: 250),
-                                      reverseDuration:
-                                          const Duration(milliseconds: 250),
-                                      child: const SplashScreenWidget(),
-                                    ),
-                                  );
-                                  logFirebaseEvent('Button_Auth');
-                                  await signOut();
-                                },
-                                text: 'Çıkış Yap',
-                                options: EDButtonOptions(
-                                  width: 130,
-                                  height: 50,
-                                  color: EsenDoTheme.of(context).tertiaryColor,
-                                  textStyle: EsenDoTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Lexend Deca',
-                                        color: EsenDoTheme.of(context)
-                                            .primaryColor,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 0, 0, 16),
+                                child: EDButtonWidget(
+                                  onPressed: () async {
+                                    logFirebaseEvent(
+                                        'MY_PROFILE_PAGE_ÇIKIŞ_YAP_BUTTON_ON_TAP');
+                                    logFirebaseEvent('Button_Navigate-To');
+                                    await Navigator.push(
+                                      context,
+                                      PageTransition(
+                                        type: PageTransitionType.bottomToTop,
+                                        duration:
+                                            const Duration(milliseconds: 250),
+                                        reverseDuration:
+                                            const Duration(milliseconds: 250),
+                                        child: SplashScreenWidget(),
                                       ),
-                                  elevation: 3,
-                                  borderSide: const BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                    );
+                                  },
+                                  text: 'Çıkış Yap',
+                                  options: EDButtonOptions(
+                                    width: 130,
+                                    height: 50,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
+                                    textStyle: EsenDoTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Lexend Deca',
+                                          color: EsenDoTheme.of(context)
+                                              .primaryColor,
+                                        ),
+                                    elevation: 3,
+                                    borderSide: const BorderSide(
+                                      color: Colors.transparent,
+                                      width: 1,
+                                    ),
+                                    borderRadius: 8,
+                                    splashColor:
+                                        EsenDoTheme.of(context).primaryColor,
+                                    disabledColor:
+                                        EsenDoTheme.of(context).primaryColor,
+                                    padding: const EdgeInsets.all(0),
+                                    iconSize: 0,
+                                    disabledTextColor: Colors.white,
+                                    iconColor: Colors.white,
+                                    iconPadding: const EdgeInsets.all(0),
                                   ),
-                                  borderRadius: 8,
+                                  icon: Icon(Icons.exit_to_app),
+                                  iconData: Icons.exit_to_app,
+                                  key: Key('exit_to_app'),
                                 ),
                               ),
-                            ),
-                            Text(
-                              'Uygulama Versiyonu v2.0',
-                              textAlign: TextAlign.center,
-                              style: EsenDoTheme.of(context).bodyText2,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ).animated([animationsMap['rowOnPageLoadAnimation']]),
-                  ),
+                              Text(
+                                'Uygulama Versiyonu v2.0',
+                                textAlign: TextAlign.center,
+                                style: EsenDoTheme.of(context).bodyText2,
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
                 ),
               ],
             ),

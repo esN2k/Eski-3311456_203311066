@@ -1,28 +1,24 @@
-import 'package:esendo/esendo/internationalization.dart';
+// ignore_for_file: use_build_context_synchronously, null_closures, library_private_types_in_public_api
 
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CreateTaskCopyWidget extends StatefulWidget {
-  const CreateTaskCopyWidget({Key key}) : super(key: key);
+  const CreateTaskCopyWidget({Key? key}) : super(key: key);
 
   @override
   _CreateTaskCopyWidgetState createState() => _CreateTaskCopyWidgetState();
 }
 
 class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
-  DateTime datePicked;
-  TextEditingController textController1;
-  TextEditingController textController2;
-  TextEditingController textController3;
+  late DateTime datePicked;
+  late TextEditingController textController1;
+  late TextEditingController textController2;
+  late TextEditingController textController3;
 
   @override
   void initState() {
@@ -45,7 +41,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
         height: 470,
         decoration: BoxDecoration(
           color: EsenDoTheme.of(context).primaryBlack,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               blurRadius: 7,
               color: Color(0x5D000000),
@@ -58,7 +54,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 20, 16, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -70,7 +66,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -85,7 +81,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
               child: TextFormField(
                 controller: textController1,
                 obscureText: false,
@@ -115,7 +111,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
               child: TextFormField(
                 controller: textController2,
                 obscureText: false,
@@ -147,7 +143,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
               child: TextFormField(
                 controller: textController3,
                 obscureText: false,
@@ -177,7 +173,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
               child: InkWell(
                 onTap: () async {
                   logFirebaseEvent('Container_ON_TAP');
@@ -191,7 +187,8 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
                     currentTime: getCurrentTimestamp,
                     minTime: getCurrentTimestamp,
                     locale: LocaleType.values.firstWhere(
-                      (l) => l.name == EDLocalizations.of(context).languageCode,
+                      (l) =>
+                          l.name == EDLocalizations.of(context)!.languageCode,
                       orElse: null,
                     ),
                   );
@@ -208,7 +205,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
                     ),
                   ),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8, 14, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(8, 14, 0, 0),
                     child: Text(
                       textController3.text,
                       style: EsenDoTheme.of(context).bodyText1,
@@ -218,7 +215,7 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -234,17 +231,27 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
                       width: 130,
                       height: 50,
                       color: EsenDoTheme.of(context).primaryBlack,
-                      textStyle:
-                          EsenDoTheme.of(context).subtitle2.override(
-                                fontFamily: 'Lexend Deca',
-                                color: Colors.white,
-                              ),
-                      borderSide: BorderSide(
+                      textStyle: EsenDoTheme.of(context).subtitle2.override(
+                            fontFamily: 'Lexend Deca',
+                            color: Colors.white,
+                          ),
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1,
                       ),
-                      borderRadius: 12,
+                      borderRadius: 8,
+                      splashColor: EsenDoTheme.of(context).primaryColor,
+                      disabledColor: EsenDoTheme.of(context).primaryColor,
+                      padding: const EdgeInsets.all(0),
+                      iconSize: 0,
+                      disabledTextColor: Colors.white,
+                      iconColor: Colors.white,
+                      iconPadding: const EdgeInsets.all(0),
+                      elevation: 0,
                     ),
+                    icon: const Icon(Icons.exit_to_app),
+                    iconData: Icons.exit_to_app,
+                    key: const Key('exit_to_app'),
                   ),
                   EDButtonWidget(
                     onPressed: () async {
@@ -267,18 +274,27 @@ class _CreateTaskCopyWidgetState extends State<CreateTaskCopyWidget> {
                       width: 130,
                       height: 50,
                       color: EsenDoTheme.of(context).primaryColor,
-                      textStyle:
-                          EsenDoTheme.of(context).subtitle2.override(
-                                fontFamily: 'Lexend Deca',
-                                color: Colors.white,
-                              ),
+                      textStyle: EsenDoTheme.of(context).subtitle2.override(
+                            fontFamily: 'Lexend Deca',
+                            color: Colors.white,
+                          ),
                       elevation: 3,
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                         color: Colors.transparent,
                         width: 1,
                       ),
                       borderRadius: 8,
+                      splashColor: EsenDoTheme.of(context).primaryColor,
+                      disabledColor: EsenDoTheme.of(context).primaryColor,
+                      padding: const EdgeInsets.all(0),
+                      iconSize: 0,
+                      disabledTextColor: Colors.white,
+                      iconColor: Colors.white,
+                      iconPadding: const EdgeInsets.all(0),
                     ),
+                    icon: const Icon(Icons.exit_to_app),
+                    iconData: Icons.exit_to_app,
+                    key: const Key('exit_to_app'),
                   ),
                 ],
               ),

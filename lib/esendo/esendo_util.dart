@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, duplicate_ignore, unnecessary_null_comparison
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,15 +12,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 
-import 'lat_lng.dart';
-
 export 'lat_lng.dart';
 export 'place.dart';
 export 'dart:math' show min, max;
 export 'package:intl/intl.dart';
 export 'package:cloud_firestore/cloud_firestore.dart' show DocumentReference;
 export 'package:page_transition/page_transition.dart';
-export 'internationalization.dart' show FFLocalizations;
+export 'internationalization.dart';
 export '../backend/firebase_analytics/analytics.dart';
 
 T valueOrDefault<T>(T value, T defaultValue) =>
@@ -37,6 +37,7 @@ String dateTimeFormat(String format, DateTime dateTime) {
 Future launchURL(String url) async {
   var uri = Uri.parse(url).toString();
   try {
+    // ignore: deprecated_member_use
     await launch(uri);
   } catch (e) {
     throw 'Could not launch $uri: $e';
@@ -60,12 +61,12 @@ enum DecimalType {
 
 String formatNumber(
   num value, {
-  FormatType formatType,
-  DecimalType decimalType,
-  String currency,
+  FormatType? formatType,
+  DecimalType? decimalType,
+  String? currency,
   bool toLowerCase = false,
-  String format,
-  String locale,
+  String? format,
+  String? locale,
 }) {
   var formattedValue = '';
   switch (formatType) {
@@ -79,6 +80,9 @@ String formatNumber(
           break;
         case DecimalType.commaDecimal:
           formattedValue = NumberFormat.decimalPattern('es_PA').format(value);
+          break;
+        default:
+          formattedValue = NumberFormat.decimalPattern().format(value);
           break;
       }
       break;
@@ -98,21 +102,21 @@ String formatNumber(
       formattedValue = NumberFormat.compactLong().format(value);
       break;
     case FormatType.custom:
-      final hasLocale = locale != null && locale.isNotEmpty;
+      final hasLocale = locale!.isNotEmpty;
       formattedValue =
           NumberFormat(format, hasLocale ? locale : null).format(value);
+      break;
+      default: formattedValue = NumberFormat.decimalPattern().format(value);
   }
 
   if (formattedValue.isEmpty) {
     return value.toString();
   }
 
-  if (currency != null) {
-    final currencySymbol = currency.isNotEmpty
-        ? currency
-        : NumberFormat.simpleCurrency().format(0.0).substring(0, 1);
-    formattedValue = '$currencySymbol$formattedValue';
-  }
+  final currencySymbol = currency!.isNotEmpty
+      ? currency
+      : NumberFormat.simpleCurrency().format(0.0).substring(0, 1);
+  formattedValue = '$currencySymbol$formattedValue';
 
   return formattedValue;
 }
@@ -139,7 +143,7 @@ bool get isAndroid => !kIsWeb && Platform.isAndroid;
 bool get isiOS => !kIsWeb && Platform.isIOS;
 bool get isWeb => kIsWeb;
 bool responsiveVisibility({
-  @required BuildContext context,
+  required BuildContext context,
   bool phone = true,
   bool tablet = true,
   bool tabletLandscape = true,
@@ -162,10 +166,10 @@ extension StringDocRef on String {
 }
 
 void setAppLanguage(BuildContext context, String language) =>
-    MyApp.of(context).setLocale(Locale(language, ''));
+    MyApp.of(context)!.setLocale(Locale(language, ''));
 
 void setDarkModeSetting(BuildContext context, ThemeMode themeMode) =>
-    MyApp.of(context).setThemeMode(themeMode);
+    MyApp.of(context)!.setThemeMode(themeMode);
 
 void showSnackbar(
   BuildContext context,
@@ -179,6 +183,7 @@ void showSnackbar(
       content: Row(
         children: [
           if (loading)
+            // ignore: prefer_const_constructors
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 10.0),
               child: SizedBox(
@@ -198,8 +203,6 @@ void showSnackbar(
 }
 
 extension FFStringExt on String {
-  String maybeHandleOverflow({int maxChars, String replacement = ''}) =>
-      maxChars != null && length > maxChars
-          ? replaceRange(maxChars, null, replacement)
-          : this;
+  String maybeHandleOverflow({int? maxChars, String replacement = ''}) =>
+      length > maxChars! ? replaceRange(maxChars, null, replacement) : this;
 }

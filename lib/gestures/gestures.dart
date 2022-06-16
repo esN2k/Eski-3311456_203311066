@@ -1,13 +1,13 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
 import '../main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class GesturesWidget extends StatefulWidget {
-  const GesturesWidget({Key key}) : super(key: key);
+  const GesturesWidget({Key? key}) : super(key: key);
 
   @override
   _GesturesWidgetState createState() => _GesturesWidgetState();
@@ -121,7 +121,19 @@ class _GesturesWidgetState extends State<GesturesWidget> {
                                 width: 1,
                               ),
                               borderRadius: 50,
-                            ),
+                              disabledColor: Colors.white,
+                              disabledTextColor:
+                                  EsenDoTheme.of(context).primaryColor,
+                              iconColor: EsenDoTheme.of(context).primaryColor,
+                              iconSize: 24,
+                              splashColor: Colors.white,
+                              padding: const EdgeInsets.all(0),
+                              iconPadding: const EdgeInsets.all(0),
+                            ), key: const Key('GesturesWidget'), icon: Icon(
+                              Icons.gesture,
+                              color: EsenDoTheme.of(context).primaryColor,
+                              size: 24,
+                            ), iconData: Icons.gesture,
                           ),
                         ),
                       ],

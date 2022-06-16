@@ -1,15 +1,17 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 
 class EsenDoIconButton extends StatelessWidget {
   const EsenDoIconButton(
-      {Key key,
-      this.borderColor,
-      this.borderRadius,
-      this.borderWidth,
-      this.buttonSize,
-      this.fillColor,
-      this.icon,
-      this.onPressed})
+      {Key? key,
+      required this.borderColor,
+      required this.borderRadius,
+      required this.borderWidth,
+      required this.buttonSize,
+      required this.fillColor,
+      required this.icon,
+      required this.onPressed})
       : super(key: key);
 
   final double borderRadius;
@@ -32,8 +34,8 @@ class EsenDoIconButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: fillColor,
             border: Border.all(
-              color: borderColor ?? Colors.transparent,
-              width: borderWidth ?? 0,
+              color: borderColor,
+              width: borderWidth,
             ),
             borderRadius: borderRadius != null
                 ? BorderRadius.circular(borderRadius)

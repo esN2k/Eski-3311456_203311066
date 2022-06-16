@@ -1,28 +1,24 @@
-import 'package:esendo/esendo/internationalization.dart';
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, null_closures, library_private_types_in_public_api
 
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CreateTaskPageWidget extends StatefulWidget {
-  const CreateTaskPageWidget({Key key}) : super(key: key);
+  const CreateTaskPageWidget({Key? key}) : super(key: key);
 
   @override
   _CreateTaskPageWidgetState createState() => _CreateTaskPageWidgetState();
 }
 
 class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
-  DateTime datePicked;
-  TextEditingController textController1;
-  TextEditingController textController2;
+  late DateTime datePicked;
+  late TextEditingController textController1;
+  late TextEditingController textController2;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -94,7 +90,7 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                     height: MediaQuery.of(context).size.height * 1,
                     decoration: BoxDecoration(
                       color: EsenDoTheme.of(context).primaryBlack,
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           blurRadius: 7,
                           color: Color(0x5D000000),
@@ -136,8 +132,7 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Lexend Deca',
-                                        color:
-                                            EsenDoTheme.of(context).white,
+                                        color: EsenDoTheme.of(context).white,
                                       ),
                                 ),
                               ),
@@ -156,16 +151,16 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Lexend Deca',
-                                    color: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                   ),
                               hintText: 'Yapılacak şeyi buraya girin...',
                               hintStyle: EsenDoTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Lexend Deca',
-                                    color: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -199,16 +194,16 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Lexend Deca',
-                                    color: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                   ),
                               hintText: 'Detayını buraya ekleyin...',
                               hintStyle: EsenDoTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Lexend Deca',
-                                    color: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                   ),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -250,7 +245,7 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                 locale: LocaleType.values.firstWhere(
                                   (l) =>
                                       l.name ==
-                                      EDLocalizations.of(context).languageCode,
+                                      EDLocalizations.of(context)!.languageCode,
                                   orElse: null,
                                 ),
                               );
@@ -300,8 +295,7 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                 options: EDButtonOptions(
                                   width: 130,
                                   height: 50,
-                                  color: EsenDoTheme.of(context)
-                                      .secondaryColor,
+                                  color: EsenDoTheme.of(context).secondaryColor,
                                   textStyle: EsenDoTheme.of(context)
                                       .subtitle2
                                       .override(
@@ -313,7 +307,23 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                     color: Colors.transparent,
                                     width: 1,
                                   ),
-                                  borderRadius: 12,
+                                  borderRadius: 8,
+                                  splashColor:
+                                      EsenDoTheme.of(context).primaryColor,
+                                  disabledColor:
+                                      EsenDoTheme.of(context).primaryColor,
+                                  padding: const EdgeInsets.all(0),
+                                  iconSize: 0,
+                                  disabledTextColor: Colors.white,
+                                  iconColor: Colors.white,
+                                  iconPadding: const EdgeInsets.all(0),
+                                  elevation: 0,
+                                ),
+                                key: Key('cancelButton'),
+                                iconData: Icons.arrow_back,
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white,
                                 ),
                               ),
                               EDButtonWidget(
@@ -337,8 +347,7 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                 options: EDButtonOptions(
                                   width: 130,
                                   height: 50,
-                                  color:
-                                      EsenDoTheme.of(context).primaryColor,
+                                  color: EsenDoTheme.of(context).primaryColor,
                                   textStyle: EsenDoTheme.of(context)
                                       .subtitle2
                                       .override(
@@ -351,7 +360,20 @@ class _CreateTaskPageWidgetState extends State<CreateTaskPageWidget> {
                                     width: 1,
                                   ),
                                   borderRadius: 8,
+                                  disabledColor: Colors.white,
+                                  splashColor: Colors.white,
+                                  padding: EdgeInsets.all(0),
+                                  iconSize: 0,
+                                  iconPadding: EdgeInsets.all(0),
+                                  disabledTextColor: Colors.white,
+                                  iconColor: Colors.white,
                                 ),
+                                key: Key('Yapılacak Ekle'),
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                                iconData: Icons.add,
                               ),
                             ],
                           ),

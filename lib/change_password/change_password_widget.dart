@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../esendo/esendo_icon_button.dart';
@@ -6,17 +8,16 @@ import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
-  const ChangePasswordWidget({Key key}) : super(key: key);
+  const ChangePasswordWidget({Key? key}) : super(key: key);
 
   @override
   _ChangePasswordWidgetState createState() => _ChangePasswordWidgetState();
 }
 
 class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
-  TextEditingController emailTextController;
+  late TextEditingController emailTextController;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -30,7 +31,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<UsersRecord>>(
+    return StreamBuilder<List<UsersRecord?>>(
       stream: queryUsersRecord(
         singleRecord: true,
       ),
@@ -48,15 +49,10 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
             ),
           );
         }
-        List<UsersRecord> changePasswordUsersRecordList = snapshot.data;
         // Return an empty Container when the document does not exist.
-        if (snapshot.data.isEmpty) {
+        if (snapshot.data!.isEmpty) {
           return Container();
         }
-        final changePasswordUsersRecord =
-            changePasswordUsersRecordList.isNotEmpty
-                ? changePasswordUsersRecordList.first
-                : null;
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
@@ -76,6 +72,8 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                 logFirebaseEvent('IconButton_Navigate-Back');
                 Navigator.pop(context);
               },
+              borderWidth: 8,
+              fillColor: Colors.white,
             ),
             title: Text(
               'Şifre Değiştir',
@@ -84,7 +82,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     color: EsenDoTheme.of(context).tertiaryColor,
                   ),
             ),
-            actions: [],
+            actions: const [],
             centerTitle: false,
             elevation: 0,
           ),
@@ -103,53 +101,49 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                       color: EsenDoTheme.of(context).secondaryColor,
                     ),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16, 12, 0, 0),
                             child: Text(
                               'E-postanızı girin, size güncellemeniz için e-postanıza bir şifre sıfırlama bağlantısı göndereceğiz.',
-                              style: EsenDoTheme.of(context)
-                                  .bodyText2
-                                  .override(
+                              style: EsenDoTheme.of(context).bodyText2.override(
                                     fontFamily: 'Lexend Deca',
-                                    color: EsenDoTheme.of(context)
-                                        .primaryColor,
+                                    color: EsenDoTheme.of(context).primaryColor,
                                   ),
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16, 16, 16, 0),
                             child: TextFormField(
                               controller: emailTextController,
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'E-posta adresiniz',
                                 hintText: 'E-posta\'nıza link yollayacağız...',
-                                hintStyle: EsenDoTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0x9AFFFFFF),
-                                    ),
+                                hintStyle:
+                                    EsenDoTheme.of(context).bodyText1.override(
+                                          fontFamily: 'Lexend Deca',
+                                          color: const Color(0x9AFFFFFF),
+                                        ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
-                                    color: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                     width: 1,
                                   ),
                                   borderRadius: BorderRadius.circular(8),
@@ -159,16 +153,13 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                     EsenDoTheme.of(context).tertiaryColor,
                                 prefixIcon: Icon(
                                   Icons.email_outlined,
-                                  color: EsenDoTheme.of(context)
-                                      .secondaryColor,
+                                  color: EsenDoTheme.of(context).secondaryColor,
                                 ),
                               ),
-                              style: EsenDoTheme.of(context)
-                                  .bodyText1
-                                  .override(
+                              style: EsenDoTheme.of(context).bodyText1.override(
                                     fontFamily: 'Lexend Deca',
-                                    color: EsenDoTheme.of(context)
-                                        .secondaryColor,
+                                    color:
+                                        EsenDoTheme.of(context).secondaryColor,
                                   ),
                               keyboardType: TextInputType.emailAddress,
                               validator: (val) {
@@ -181,14 +172,14 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 16, 0, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
                                   child: EDButtonWidget(
                                     onPressed: () async {
@@ -200,7 +191,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                       if (emailTextController.text.isEmpty) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
-                                          SnackBar(
+                                          const SnackBar(
                                             content: Text(
                                               'E-posta gerekiyor.',
                                             ),
@@ -217,8 +208,8 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                     options: EDButtonOptions(
                                       width: 230,
                                       height: 50,
-                                      color: EsenDoTheme.of(context)
-                                          .tertiaryColor,
+                                      color:
+                                          EsenDoTheme.of(context).tertiaryColor,
                                       textStyle: EsenDoTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -227,12 +218,24 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                                                 .secondaryColor,
                                           ),
                                       elevation: 3,
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
                                       ),
                                       borderRadius: 8,
+                                      splashColor:
+                                          EsenDoTheme.of(context).primaryColor,
+                                      disabledColor:
+                                          EsenDoTheme.of(context).primaryColor,
+                                      padding: const EdgeInsets.all(0),
+                                      iconSize: 0,
+                                      disabledTextColor: Colors.white,
+                                      iconColor: Colors.white,
+                                      iconPadding: const EdgeInsets.all(0),
                                     ),
+                                    icon: const Icon(Icons.exit_to_app),
+                                    iconData: Icons.exit_to_app,
+                                    key: const Key('exit_to_app'),
                                   ),
                                 ),
                               ],

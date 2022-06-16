@@ -6,13 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const kThemeModeKey = '__theme_mode__';
-SharedPreferences _prefs;
+SharedPreferences _prefs = 0 as SharedPreferences;
 
 abstract class EsenDoTheme {
   static Future initialize() async =>
       _prefs = await SharedPreferences.getInstance();
   static ThemeMode get themeMode {
-    final darkMode = _prefs?.getBool(kThemeModeKey);
+    final darkMode = _prefs.getBool(kThemeModeKey);
     return darkMode == null
         ? ThemeMode.system
         : darkMode
@@ -21,27 +21,27 @@ abstract class EsenDoTheme {
   }
 
   static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
-      ? _prefs?.remove(kThemeModeKey)
-      : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
+      ? _prefs.remove(kThemeModeKey)
+      : _prefs.setBool(kThemeModeKey, mode == ThemeMode.dark);
 
   static EsenDoTheme of(BuildContext context) =>
       Theme.of(context).brightness == Brightness.dark
           ? DarkModeTheme()
           : LightModeTheme();
 
-  Color primaryColor;
-  Color secondaryColor;
-  Color tertiaryColor;
-  Color alternate;
-  Color primaryBackground;
-  Color secondaryBackground;
-  Color primaryText;
-  Color secondaryText;
+  late Color primaryColor;
+  late Color secondaryColor;
+  late Color tertiaryColor;
+  late Color alternate;
+  late Color primaryBackground;
+  late Color secondaryBackground;
+  late Color primaryText;
+  late Color secondaryText;
 
-  Color white;
-  Color grayBG;
-  Color darkBG;
-  Color primaryBlack;
+  late Color white;
+  late Color grayBG;
+  late Color darkBG;
+  late Color primaryBlack;
 
   TextStyle get title1 => GoogleFonts.getFont(
         'Lexend Deca',
@@ -121,22 +121,22 @@ class DarkModeTheme extends EsenDoTheme {
 
 extension TextStyleHelper on TextStyle {
   TextStyle override({
-    String fontFamily,
-    Color color,
-    double fontSize,
-    FontWeight fontWeight,
-    FontStyle fontStyle,
+    String? fontFamily,
+    Color? color,
+    double? fontSize,
+    FontWeight? fontWeight,
+    FontStyle? fontStyle,
     bool useGoogleFonts = true,
-    TextDecoration decoration,
-    double lineHeight,
+    TextDecoration? decoration,
+    double? lineHeight,
   }) =>
       useGoogleFonts
           ? GoogleFonts.getFont(
-              fontFamily,
-              color: color ?? this.color,
-              fontSize: fontSize ?? this.fontSize,
-              fontWeight: fontWeight ?? this.fontWeight,
-              fontStyle: fontStyle ?? this.fontStyle,
+              fontFamily!,
+              color: color,
+              fontSize: fontSize,
+              fontWeight: fontWeight,
+              fontStyle: fontStyle,
               decoration: decoration,
               height: lineHeight,
             )

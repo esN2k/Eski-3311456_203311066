@@ -1,28 +1,24 @@
-import 'package:esendo/esendo/internationalization.dart';
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CreateTaskWidget extends StatefulWidget {
-  const CreateTaskWidget({Key key}) : super(key: key);
+  const CreateTaskWidget({Key? key}) : super(key: key);
 
   @override
   _CreateTaskWidgetState createState() => _CreateTaskWidgetState();
 }
 
 class _CreateTaskWidgetState extends State<CreateTaskWidget> {
-  DateTime datePicked;
-  TextEditingController textController1;
-  TextEditingController textController2;
-  ToDoListRecord newRecord;
+  late DateTime datePicked;
+  late TextEditingController textController1;
+  late TextEditingController textController2;
+  late ToDoListRecord newRecord;
 
   @override
   void initState() {
@@ -172,8 +168,9 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
                     currentTime: getCurrentTimestamp,
                     minTime: getCurrentTimestamp,
                     locale: LocaleType.values.firstWhere(
-                      (l) => l.name == EDLocalizations.of(context).languageCode,
-                      orElse: () => null,
+                      (l) =>
+                          l.name == EDLocalizations.of(context)!.languageCode,
+                      orElse: () => LocaleType.en,
                     ),
                   );
                 },
@@ -226,8 +223,19 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
                         color: Colors.transparent,
                         width: 1,
                       ),
-                      borderRadius: 12,
+                      borderRadius: 8,
+                      splashColor: EsenDoTheme.of(context).primaryColor,
+                      disabledColor: EsenDoTheme.of(context).primaryColor,
+                      padding: const EdgeInsets.all(0),
+                      iconSize: 0,
+                      disabledTextColor: Colors.white,
+                      iconColor: Colors.white,
+                      iconPadding: const EdgeInsets.all(0),
+                      elevation: 0,
                     ),
+                    icon: const Icon(Icons.exit_to_app),
+                    iconData: Icons.exit_to_app,
+                    key: const Key('exit_to_app'),
                   ),
                   EDButtonWidget(
                     onPressed: () async {
@@ -243,7 +251,7 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
                           ToDoListRecord.collection.doc();
                       await toDoListRecordReference.set(toDoListCreateData);
                       newRecord = ToDoListRecord.getDocumentFromData(
-                          toDoListCreateData, toDoListRecordReference);
+                          toDoListCreateData, toDoListRecordReference)!;
                       logFirebaseEvent('Button_Navigate-Back');
                       Navigator.pop(context);
 
@@ -264,7 +272,17 @@ class _CreateTaskWidgetState extends State<CreateTaskWidget> {
                         width: 1,
                       ),
                       borderRadius: 8,
+                      splashColor: EsenDoTheme.of(context).primaryColor,
+                      disabledColor: EsenDoTheme.of(context).primaryColor,
+                      padding: const EdgeInsets.all(0),
+                      iconSize: 0,
+                      disabledTextColor: Colors.white,
+                      iconColor: Colors.white,
+                      iconPadding: const EdgeInsets.all(0),
                     ),
+                    icon: const Icon(Icons.exit_to_app),
+                    iconData: Icons.exit_to_app,
+                    key: const Key('exit_to_app'),
                   ),
                 ],
               ),

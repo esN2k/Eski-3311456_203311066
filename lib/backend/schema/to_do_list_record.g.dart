@@ -17,10 +17,10 @@ class _$ToDoListRecordSerializer
   final String wireName = 'ToDoListRecord';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ToDoListRecord object,
+  Iterable<Object?> serialize(Serializers serializers, ToDoListRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    Object value;
+    final result = <Object?>[];
+    Object? value;
     value = object.toDoDate;
     if (value != null) {
       result
@@ -55,44 +55,44 @@ class _$ToDoListRecordSerializer
         ..add('Document__Reference__Field')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
-                DocumentReference, const [const FullType(Object)])));
+                DocumentReference, const [const FullType.nullable(Object)])));
     }
     return result;
   }
 
   @override
   ToDoListRecord deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ToDoListRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'toDoDate':
           result.toDoDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'toDoName':
           result.toDoName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'toDoDescription':
           result.toDoDescription = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'toDoState':
           result.toDoState = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'Document__Reference__Field':
           result.reference = serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      DocumentReference, const [const FullType(Object)]))
-              as DocumentReference<Object>;
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
           break;
       }
     }
@@ -103,17 +103,17 @@ class _$ToDoListRecordSerializer
 
 class _$ToDoListRecord extends ToDoListRecord {
   @override
-  final DateTime toDoDate;
+  final DateTime? toDoDate;
   @override
-  final String toDoName;
+  final String? toDoName;
   @override
-  final String toDoDescription;
+  final String? toDoDescription;
   @override
-  final bool toDoState;
+  final bool? toDoState;
   @override
-  final DocumentReference<Object> reference;
+  final DocumentReference<Object?>? reference;
 
-  factory _$ToDoListRecord([void Function(ToDoListRecordBuilder) updates]) =>
+  factory _$ToDoListRecord([void Function(ToDoListRecordBuilder)? updates]) =>
       (new ToDoListRecordBuilder()..update(updates))._build();
 
   _$ToDoListRecord._(
@@ -167,28 +167,28 @@ class _$ToDoListRecord extends ToDoListRecord {
 
 class ToDoListRecordBuilder
     implements Builder<ToDoListRecord, ToDoListRecordBuilder> {
-  _$ToDoListRecord _$v;
+  _$ToDoListRecord? _$v;
 
-  DateTime _toDoDate;
-  DateTime get toDoDate => _$this._toDoDate;
-  set toDoDate(DateTime toDoDate) => _$this._toDoDate = toDoDate;
+  DateTime? _toDoDate;
+  DateTime? get toDoDate => _$this._toDoDate;
+  set toDoDate(DateTime? toDoDate) => _$this._toDoDate = toDoDate;
 
-  String _toDoName;
-  String get toDoName => _$this._toDoName;
-  set toDoName(String toDoName) => _$this._toDoName = toDoName;
+  String? _toDoName;
+  String? get toDoName => _$this._toDoName;
+  set toDoName(String? toDoName) => _$this._toDoName = toDoName;
 
-  String _toDoDescription;
-  String get toDoDescription => _$this._toDoDescription;
-  set toDoDescription(String toDoDescription) =>
+  String? _toDoDescription;
+  String? get toDoDescription => _$this._toDoDescription;
+  set toDoDescription(String? toDoDescription) =>
       _$this._toDoDescription = toDoDescription;
 
-  bool _toDoState;
-  bool get toDoState => _$this._toDoState;
-  set toDoState(bool toDoState) => _$this._toDoState = toDoState;
+  bool? _toDoState;
+  bool? get toDoState => _$this._toDoState;
+  set toDoState(bool? toDoState) => _$this._toDoState = toDoState;
 
-  DocumentReference<Object> _reference;
-  DocumentReference<Object> get reference => _$this._reference;
-  set reference(DocumentReference<Object> reference) =>
+  DocumentReference<Object?>? _reference;
+  DocumentReference<Object?>? get reference => _$this._reference;
+  set reference(DocumentReference<Object?>? reference) =>
       _$this._reference = reference;
 
   ToDoListRecordBuilder() {
@@ -215,7 +215,7 @@ class ToDoListRecordBuilder
   }
 
   @override
-  void update(void Function(ToDoListRecordBuilder) updates) {
+  void update(void Function(ToDoListRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

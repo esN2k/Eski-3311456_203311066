@@ -1,19 +1,19 @@
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../esendo/esendo_icon_button.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class EditProfileWidget extends StatefulWidget {
   const EditProfileWidget({
-    Key key,
-    this.displayName,
-    this.email,
+    Key? key,
+    required this.displayName,
+    required this.email,
   }) : super(key: key);
 
   final UsersRecord displayName;
@@ -24,8 +24,8 @@ class EditProfileWidget extends StatefulWidget {
 }
 
 class _EditProfileWidgetState extends State<EditProfileWidget> {
-  TextEditingController textController1;
-  TextEditingController textController2;
+  late TextEditingController textController1;
+  late TextEditingController textController2;
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -37,7 +37,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<UsersRecord>>(
+    return StreamBuilder<List<UsersRecord?>>(
       stream: queryUsersRecord(
         singleRecord: true,
       ),
@@ -55,9 +55,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
             ),
           );
         }
-        List<UsersRecord> editProfileUsersRecordList = snapshot.data;
+        List<UsersRecord>? editProfileUsersRecordList = snapshot.data!.cast<UsersRecord>();
         // Return an empty Container when the document does not exist.
-        if (snapshot.data.isEmpty) {
+        if (snapshot.data!.isEmpty) {
           return Container();
         }
         final editProfileUsersRecord = editProfileUsersRecordList.isNotEmpty
@@ -82,6 +82,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 logFirebaseEvent('IconButton_Navigate-Back');
                 Navigator.pop(context);
               },
+              fillColor: EsenDoTheme.of(context).tertiaryColor,
+              borderWidth: 50,
             ),
             title: Text(
               'Profili Düzenle',
@@ -90,7 +92,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     color: EsenDoTheme.of(context).tertiaryColor,
                   ),
             ),
-            actions: [],
+            actions: const [],
             centerTitle: false,
             elevation: 0,
           ),
@@ -110,8 +112,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     ),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
-                      child: StreamBuilder<UsersRecord>(
-                        stream: UsersRecord.getDocument(currentUserReference),
+                      child: StreamBuilder<UsersRecord?>(
+                        stream: UsersRecord.getDocument(currentUserReference!),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
@@ -120,14 +122,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 width: 50,
                                 height: 50,
                                 child: SpinKitFoldingCube(
-                                  color:
-                                      EsenDoTheme.of(context).primaryColor,
+                                  color: EsenDoTheme.of(context).primaryColor,
                                   size: 50,
                                 ),
                               ),
                             );
                           }
-                          final columnUsersRecord = snapshot.data;
                           return Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -145,10 +145,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16, 16, 16, 0),
                                 child: TextFormField(
-                                  controller: textController1 ??=
-                                      TextEditingController(
-                                    text: editProfileUsersRecord.displayName,
-                                  ),
+                                  controller: textController1,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'Tam İsminiz',
@@ -176,8 +173,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
-                                    fillColor: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    fillColor:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                     prefixIcon: Icon(
                                       Icons.person_rounded,
                                       color: EsenDoTheme.of(context)
@@ -197,10 +194,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16, 16, 16, 0),
                                 child: TextFormField(
-                                  controller: textController2 ??=
-                                      TextEditingController(
-                                    text: editProfileUsersRecord.email,
-                                  ),
+                                  controller: textController2,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelText: 'E-posta Adresi',
@@ -228,8 +222,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
-                                    fillColor: EsenDoTheme.of(context)
-                                        .tertiaryColor,
+                                    fillColor:
+                                        EsenDoTheme.of(context).tertiaryColor,
                                     prefixIcon: Icon(
                                       Icons.email_outlined,
                                       color: EsenDoTheme.of(context)
@@ -274,11 +268,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
                                           final usersUpdateData =
                                               createUsersRecordData(
-                                            displayName:
-                                                textController1?.text ?? '',
-                                            email: textController2?.text ?? '',
+                                            displayName: textController1.text,
+                                            email: textController2.text,
                                           );
-                                          await editProfileUsersRecord.reference
+                                          await editProfileUsersRecord!
+                                              .reference!
                                               .update(usersUpdateData);
                                         },
                                         text: 'Değişiklikleri Kaydet',
@@ -287,14 +281,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                           height: 50,
                                           color: EsenDoTheme.of(context)
                                               .tertiaryColor,
-                                          textStyle: EsenDoTheme.of(
-                                                  context)
+                                          textStyle: EsenDoTheme.of(context)
                                               .subtitle2
                                               .override(
                                                 fontFamily: 'Lexend Deca',
-                                                color:
-                                                    EsenDoTheme.of(context)
-                                                        .primaryColor,
+                                                color: EsenDoTheme.of(context)
+                                                    .primaryColor,
                                               ),
                                           elevation: 3,
                                           borderSide: BorderSide(
@@ -302,7 +294,20 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                             width: 1,
                                           ),
                                           borderRadius: 8,
+                                          disabledColor: Colors.white,
+                                          disabledTextColor: Colors.white,
+                                          iconColor: Colors.white,
+                                          iconPadding: EdgeInsets.zero,
+                                          iconSize: 18.0,
+                                          padding: EdgeInsets.zero,
+                                          splashColor: Colors.white,
                                         ),
+                                        key: Key('save_button'),
+                                        icon: Icon(
+                                          Icons.save_rounded,
+                                          color: Colors.white,
+                                        ),
+                                        iconData: Icons.save_rounded,
                                       ),
                                     ),
                                   ],

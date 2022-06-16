@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, prefer_function_declarations_over_variables
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../esendo/esendo_util.dart';
@@ -15,8 +17,8 @@ export 'schema/users_record.dart';
 export 'schema/to_do_list_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
-Stream<List<UsersRecord>> queryUsersRecord({
-  Query Function(Query) queryBuilder,
+Stream<List<UsersRecord?>> queryUsersRecord({
+  Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
@@ -28,8 +30,8 @@ Stream<List<UsersRecord>> queryUsersRecord({
       singleRecord: singleRecord,
     );
 
-Future<List<UsersRecord>> queryUsersRecordOnce({
-  Query Function(Query) queryBuilder,
+Future<List<UsersRecord?>> queryUsersRecordOnce({
+  Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
@@ -41,11 +43,11 @@ Future<List<UsersRecord>> queryUsersRecordOnce({
       singleRecord: singleRecord,
     );
 
-Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
+Future<EDFirestorePage<UsersRecord?>> queryUsersRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  int? pageSize,
+  bool? isStream,
 }) =>
     queryCollectionPage(
       UsersRecord.collection,
@@ -57,8 +59,8 @@ Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
     );
 
 /// Functions to query ToDoListRecords (as a Stream and as a Future).
-Stream<List<ToDoListRecord>> queryToDoListRecord({
-  Query Function(Query) queryBuilder,
+Stream<List<ToDoListRecord?>> queryToDoListRecord({
+  Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
@@ -70,8 +72,8 @@ Stream<List<ToDoListRecord>> queryToDoListRecord({
       singleRecord: singleRecord,
     );
 
-Future<List<ToDoListRecord>> queryToDoListRecordOnce({
-  Query Function(Query) queryBuilder,
+Future<List<ToDoListRecord?>> queryToDoListRecordOnce({
+  Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
@@ -83,11 +85,11 @@ Future<List<ToDoListRecord>> queryToDoListRecordOnce({
       singleRecord: singleRecord,
     );
 
-Future<FFFirestorePage<ToDoListRecord>> queryToDoListRecordPage({
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
+Future<EDFirestorePage<ToDoListRecord?>> queryToDoListRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  int? pageSize,
+  bool? isStream,
 }) =>
     queryCollectionPage(
       ToDoListRecord.collection,
@@ -98,8 +100,8 @@ Future<FFFirestorePage<ToDoListRecord>> queryToDoListRecordPage({
       isStream: isStream,
     );
 
-Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
-    {Query Function(Query) queryBuilder,
+Stream<List<T?>> queryCollection<T>(Query collection, Serializer<T> serializer,
+    {Query Function(Query)? queryBuilder,
     int limit = -1,
     bool singleRecord = false}) {
   final builder = queryBuilder ?? (q) => q;
@@ -120,9 +122,9 @@ Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
       .toList());
 }
 
-Future<List<T>> queryCollectionOnce<T>(
+Future<List<T?>> queryCollectionOnce<T>(
     Query collection, Serializer<T> serializer,
-    {Query Function(Query) queryBuilder,
+    {Query Function(Query)? queryBuilder,
     int limit = -1,
     bool singleRecord = false}) {
   final builder = queryBuilder ?? (q) => q;
@@ -141,30 +143,30 @@ Future<List<T>> queryCollectionOnce<T>(
       .toList());
 }
 
-class FFFirestorePage<T> {
+class EDFirestorePage<T> {
   final List<T> data;
   final Stream<List<T>> dataStream;
   final QueryDocumentSnapshot nextPageMarker;
 
-  FFFirestorePage(this.data, this.dataStream, this.nextPageMarker);
+  EDFirestorePage(this.data, this.dataStream, this.nextPageMarker);
 }
 
-Future<FFFirestorePage<T>> queryCollectionPage<T>(
+Future<EDFirestorePage<T?>> queryCollectionPage<T>(
   Query collection,
   Serializer<T> serializer, {
-  Query Function(Query) queryBuilder,
-  DocumentSnapshot nextPageMarker,
-  int pageSize,
-  bool isStream,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  int? pageSize,
+  bool? isStream,
 }) async {
   final builder = queryBuilder ?? (q) => q;
-  var query = builder(collection).limit(pageSize);
+  var query = builder(collection).limit(pageSize!);
   if (nextPageMarker != null) {
     query = query.startAfterDocument(nextPageMarker);
   }
   Stream<QuerySnapshot> docSnapshotStream;
   QuerySnapshot docSnapshot;
-  if (isStream) {
+  if (isStream!) {
     docSnapshotStream = query.snapshots();
     docSnapshot = await docSnapshotStream.first;
   } else {
@@ -180,9 +182,10 @@ Future<FFFirestorePage<T>> queryCollectionPage<T>(
       .where((d) => d != null)
       .toList();
   final data = getDocs(docSnapshot);
-  final dataStream = docSnapshotStream?.map(getDocs);
+  final docSnapshotStream2 = query.snapshots();
+  final dataStream = docSnapshotStream2.map(getDocs);
   final nextPageToken = docSnapshot.docs.isEmpty ? null : docSnapshot.docs.last;
-  return FFFirestorePage(data, dataStream, nextPageToken);
+  return EDFirestorePage(data, dataStream, nextPageToken!);
 }
 
 // Creates a Firestore document representing the logged in user if it doesn't yet exist

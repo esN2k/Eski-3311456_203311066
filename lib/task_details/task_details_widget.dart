@@ -1,19 +1,18 @@
-import '../auth/auth_util.dart';
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import '../backend/backend.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
 import '../esendo/esendo_widgets.dart';
 import '../main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TaskDetailsWidget extends StatefulWidget {
   const TaskDetailsWidget({
-    Key key,
-    this.toDoNote,
+    Key? key,
+    required this.toDoNote,
   }) : super(key: key);
 
   final DocumentReference toDoNote;
@@ -33,7 +32,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ToDoListRecord>(
+    return StreamBuilder<ToDoListRecord?>(
       stream: ToDoListRecord.getDocument(widget.toDoNote),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -79,7 +78,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                     Navigator.pop(context);
                   },
                   child: FaIcon(
-                    FontAwesomeIcons.solidTrashAlt,
+                    FontAwesomeIcons.solidTrashCan,
                     color: EsenDoTheme.of(context).white,
                     size: 28,
                   ),
@@ -131,7 +130,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      taskDetailsToDoListRecord.toDoName,
+                                      taskDetailsToDoListRecord!.toDoName!,
                                       style: EsenDoTheme.of(context).title1,
                                     ),
                                   ),
@@ -145,9 +144,9 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
-                                    child: StreamBuilder<ToDoListRecord>(
+                                    child: StreamBuilder<ToDoListRecord?>(
                                       stream: ToDoListRecord.getDocument(
-                                          taskDetailsToDoListRecord.reference),
+                                          taskDetailsToDoListRecord.reference!),
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
                                         if (!snapshot.hasData) {
@@ -166,7 +165,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                                         final textToDoListRecord =
                                             snapshot.data;
                                         return Text(
-                                          textToDoListRecord.toDoDescription,
+                                          textToDoListRecord!.toDoDescription!,
                                           style: EsenDoTheme.of(context)
                                               .bodyText1
                                               .override(
@@ -216,7 +215,7 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                                   Expanded(
                                     child: Text(
                                       dateTimeFormat('MMMEd',
-                                          taskDetailsToDoListRecord.toDoDate),
+                                          taskDetailsToDoListRecord.toDoDate!),
                                       style: EsenDoTheme.of(context).title2,
                                     ),
                                   ),
@@ -268,9 +267,18 @@ class _TaskDetailsWidgetState extends State<TaskDetailsWidget> {
                                     width: 1,
                                   ),
                                   borderRadius: 8,
-                                ),
+                                  disabledColor: Colors.white,
+                                  disabledTextColor:
+                                      EsenDoTheme.of(context).primaryColor,
+                                  iconColor:
+                                      EsenDoTheme.of(context).primaryColor,
+                                  iconSize: 24,
+                                  splashColor: Colors.white,
+                                  padding: const EdgeInsets.all(0),
+                                  iconPadding: const EdgeInsets.all(0),
+                                ), icon: const Icon(Icons.check), iconData: Icons.check, key: const Key('CompletedTasksButton'),
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ),

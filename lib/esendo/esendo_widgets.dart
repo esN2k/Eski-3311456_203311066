@@ -1,23 +1,22 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 class EDButtonOptions {
   const EDButtonOptions({
-    this.textStyle,
-    this.elevation,
-    this.height,
-    this.width,
-    this.padding,
-    this.color,
-    this.disabledColor,
-    this.disabledTextColor,
-    this.splashColor,
-    this.iconSize,
-    this.iconColor,
-    this.iconPadding,
-    this.borderRadius,
-    this.borderSide,
+    required this.textStyle,
+    required this.elevation,
+    required this.height,
+    required this.width,
+    required this.padding,
+    required this.color,
+    required this.disabledColor,
+    required this.disabledTextColor,
+    required this.splashColor,
+    required this.iconSize,
+    required this.iconColor,
+    required this.iconPadding,
+    required this.borderRadius,
+    required this.borderSide,
   });
 
   final TextStyle textStyle;
@@ -38,12 +37,12 @@ class EDButtonOptions {
 
 class EDButtonWidget extends StatefulWidget {
   const EDButtonWidget({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
-    this.icon,
-    this.iconData,
-    @required this.options,
+    required Key key,
+    required this.text,
+    required this.onPressed,
+    required this.icon,
+    required this.iconData,
+    required this.options,
     this.showLoadingIndicator = true,
   }) : super(key: key);
 
@@ -65,7 +64,7 @@ class _EDButtonWidgetState extends State<EDButtonWidget> {
   Widget build(BuildContext context) {
     Widget textWidget = loading
         ? Center(
-            child: Container(
+            child: SizedBox(
               width: 23,
               height: 23,
               child: CircularProgressIndicator(
@@ -102,8 +101,8 @@ class _EDButtonWidgetState extends State<EDButtonWidget> {
       shape: MaterialStateProperty.all<OutlinedBorder>(
         RoundedRectangleBorder(
           borderRadius:
-              BorderRadius.circular(widget.options.borderRadius ?? 8.0),
-          side: widget.options.borderSide ?? BorderSide.none,
+              BorderRadius.circular(widget.options.borderRadius),
+          side: widget.options.borderSide,
         ),
       ),
       foregroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -111,7 +110,7 @@ class _EDButtonWidgetState extends State<EDButtonWidget> {
           if (states.contains(MaterialState.disabled)) {
             return widget.options.disabledTextColor;
           }
-          return widget.options.textStyle.color;
+          return widget.options.textStyle.color!;
         },
       ),
       backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -126,28 +125,22 @@ class _EDButtonWidgetState extends State<EDButtonWidget> {
         if (states.contains(MaterialState.pressed)) {
           return widget.options.splashColor;
         }
-        return null;
+        return Colors.white;
       }),
-      padding: MaterialStateProperty.all(widget.options.padding ??
-          const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0)),
+      padding: MaterialStateProperty.all(widget.options.padding),
       elevation:
-          MaterialStateProperty.all<double>(widget.options.elevation ?? 2.0),
+          MaterialStateProperty.all<double>(widget.options.elevation),
     );
 
+    // ignore: unnecessary_null_comparison
     if (widget.icon != null || widget.iconData != null) {
-      return Container(
+      return SizedBox(
         height: widget.options.height,
         width: widget.options.width,
         child: ElevatedButton.icon(
           icon: Padding(
-            padding: widget.options.iconPadding ?? EdgeInsets.zero,
-            child: widget.icon ??
-                FaIcon(
-                  widget.iconData,
-                  size: widget.options.iconSize,
-                  color: widget.options.iconColor ??
-                      widget.options.textStyle.color,
-                ),
+            padding: widget.options.iconPadding,
+            child: widget.icon,
           ),
           label: textWidget,
           onPressed: onPressed,
@@ -156,7 +149,7 @@ class _EDButtonWidgetState extends State<EDButtonWidget> {
       );
     }
 
-    return Container(
+    return SizedBox(
       height: widget.options.height,
       width: widget.options.width,
       child: ElevatedButton(

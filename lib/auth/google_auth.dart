@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_function_declarations_over_variables
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,7 @@ import 'auth_util.dart';
 
 final _googleSignIn = GoogleSignIn();
 
-Future<User> signInWithGoogle(BuildContext context) async {
+Future<Future<User?>> signInWithGoogle(BuildContext context) async {
   final signInFunc = () async {
     if (kIsWeb) {
       GoogleAuthProvider googleProvider = GoogleAuthProvider();

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+
 import '../esendo/esendo_animations.dart';
 import '../esendo/esendo_theme.dart';
 import '../esendo/esendo_util.dart';
@@ -5,11 +7,9 @@ import '../esendo/esendo_widgets.dart';
 import '../login/login_widget.dart';
 import '../register/register_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreenWidget extends StatefulWidget {
-  const SplashScreenWidget({Key key}) : super(key: key);
+  const SplashScreenWidget({Key? key}) : super(key: key);
 
   @override
   _SplashScreenWidgetState createState() => _SplashScreenWidgetState();
@@ -134,7 +134,20 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                                     width: 1,
                                   ),
                                   borderRadius: 8,
+                                  disabledColor: Colors.white,
+                                  disabledTextColor: Colors.black,
+                                  iconColor: Colors.black,
+                                  iconPadding: const EdgeInsets.all(0),
+                                  iconSize: 0,
+                                  padding: const EdgeInsets.all(0),
+                                  splashColor: Colors.white,
                                 ),
+                                icon: Icon(
+                                  Icons.person_add,
+                                  color: Colors.white,
+                                ),
+                                iconData: Icons.person_add,
+                                key: Key('register'),
                               ),
                             ),
                             EDButtonWidget(
@@ -144,7 +157,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                                 await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const LoginWidget(),
+                                    builder: (context) => LoginWidget(),
                                   ),
                                 );
                               },
@@ -167,7 +180,20 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
                                   width: 1,
                                 ),
                                 borderRadius: 8,
+                                disabledColor: Colors.white,
+                                disabledTextColor: Colors.black,
+                                iconColor: Colors.black,
+                                iconPadding: const EdgeInsets.all(0),
+                                iconSize: 0,
+                                padding: const EdgeInsets.all(0),
+                                splashColor: Colors.white,
                               ),
+                              icon: Icon(
+                                Icons.person,
+                                color: EsenDoTheme.of(context).primaryColor,
+                              ),
+                              iconData: Icons.person,
+                              key: Key('login'),
                             ),
                           ],
                         ),
@@ -179,7 +205,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget>
             ],
           ),
         ),
-      ).animated([animationsMap['containerOnPageLoadAnimation']]),
+      )
     );
   }
 }

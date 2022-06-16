@@ -6,13 +6,13 @@ import '../../auth/auth_util.dart';
 const kMaxEventNameLength = 40;
 const kMaxParameterLength = 100;
 
-void logFirebaseEvent(String eventName, {Map<String, dynamic> parameters}) {
+void logFirebaseEvent(String eventName, {Map<String, dynamic>? parameters}) {
   // https://firebase.google.com/docs/reference/cpp/group/event-names
   assert(eventName.length <= kMaxEventNameLength);
 
   parameters ??= {};
-  parameters.putIfAbsent('user', () => currentUserUid ?? 'unset');
-  parameters.removeWhere((k, v) => k == null || v == null);
+  parameters.putIfAbsent('user', () => currentUserUid);
+  parameters.removeWhere((k, v) => v == null);
 
   // FB Analytics allows num values but others need to be converted to strings
   // and cannot be more than 100 characters.

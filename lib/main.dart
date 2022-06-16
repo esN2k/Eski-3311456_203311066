@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -17,25 +19,27 @@ void main() async {
   );
   await EsenDoTheme.initialize();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   State<MyApp> createState() => _MyAppState();
 
-  static _MyAppState of(BuildContext context) =>
+  static _MyAppState? of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>();
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale _locale;
-  ThemeMode _themeMode = EsenDoTheme.themeMode;
+  late Locale _locale;
+  late ThemeMode _themeMode = EsenDoTheme.themeMode;
 
-  Stream<EsendoFirebaseUser> userStream;
-  EsendoFirebaseUser initialUser;
-  bool displaySplashImage = true;
+  late Stream<EsendoFirebaseUser> userStream;
+  late EsendoFirebaseUser initialUser;
+  late bool displaySplashImage = true;
 
   final authUserSub = authenticatedUserStream.listen((_) {});
 
@@ -43,7 +47,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     userStream = esendoFirebaseUserStream()
-      ..listen((user) => initialUser ?? setState(() => initialUser = user));
+      ..listen((user) => initialUser);
     Future.delayed(
       const Duration(seconds: 1),
       () => setState(() => displaySplashImage = false),
@@ -80,7 +84,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(brightness: Brightness.light),
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: _themeMode,
-      home: initialUser == null || displaySplashImage
+      home: displaySplashImage
           ? Container(
               color: Colors.transparent,
               child: Builder(
@@ -90,15 +94,15 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             )
-          : currentUser.loggedIn
-              ? const NavBarPage()
+          : currentUser!.loggedIn
+              ? const NavBarPage(initialPage: '',)
               : const SplashScreenWidget(),
     );
   }
 }
 
 class NavBarPage extends StatefulWidget {
-  const NavBarPage({Key key, this.initialPage}) : super(key: key);
+  const NavBarPage({Key? key, required this.initialPage}) : super(key: key);
 
   final String initialPage;
 
@@ -113,15 +117,15 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   void initState() {
     super.initState();
-    _currentPage = widget.initialPage ?? _currentPage;
+    _currentPage = widget.initialPage;
   }
 
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'CompletedTasks': const CompletedTasksWidget(),
-      'myTasks': const MyTasksWidget(),
-      'MyProfile': const MyProfileWidget(),
+      'CompletedTasks': CompletedTasksWidget(),
+      'myTasks':  MyTasksWidget(),
+      'MyProfile': MyProfileWidget(displayName: null,),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPage);
     return Scaffold(

@@ -6,7 +6,7 @@ class EDLocalizations {
 
   final Locale locale;
 
-  static EDLocalizations of(BuildContext context) =>
+  static EDLocalizations? of(BuildContext context) =>
       Localizations.of<EDLocalizations>(context, EDLocalizations);
 
   static List<String> languages() => ['tr'];
@@ -22,7 +22,7 @@ class EDLocalizations {
   String getVariableText({
     String trText = '',
   }) =>
-      [trText][languageIndex] ?? '';
+      [trText][languageIndex];
 }
 
 class EDLocalizationsDelegate extends LocalizationsDelegate<EDLocalizations> {
